@@ -76,7 +76,7 @@ class UserRegSerializer(serializers.ModelSerializer):
         # initial_data是没有经过serializers处理过的数据,post中需要传入imagecodeid
         image_code = ImageCode.objects.filter(codeid=self.initial_data['imagecodeid'])
         five_mintes_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
-        timage_code = image_code.exclude(add_time__gte=five_mintes_ago)
+        timage_code = image_code.filter(add_time__gte=five_mintes_ago)
         if not timage_code:
             raise serializers.ValidationError("图片验证码超时")
         if image_code:
