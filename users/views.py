@@ -73,7 +73,7 @@ class SmsCodeViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
         five_mintes_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
         right_code = ImageCode.objects.filter(codeid=codeid)
         # lte 小于等于 gte 大于等于
-        tright_code = right_code.exclude(add_time__gte=five_mintes_ago)
+        tright_code = right_code.filter(add_time__gte=five_mintes_ago)
         if not tright_code:
             return 2
         if right_code:
